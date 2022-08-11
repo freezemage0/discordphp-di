@@ -119,7 +119,7 @@ class Decorator extends Discord
 
     protected function identify(bool $resume = true): bool
     {
-        $this->discord->identify($resume); 
+        return $this->discord->identify($resume);
     }
 
     public function heartbeat(): void

@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": "^7.4",
-    "psr/container": "^2.0"
+    "psr/container": "^2.0",
+    "team-reflex/discord-php": "^7.1"
   },
   "autoload": {
     "psr-4": {
