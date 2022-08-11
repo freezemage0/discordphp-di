@@ -269,6 +269,40 @@ class Decorator extends Discord
         $this->container = $container;
     }
 
+    public function on($event, $listener): void
+    {
+        if (!is_array($listener)) {
+            $this->discord->on($event, $listener);
+            return;
+        }
+
+        if (!isset($this->listeners[$event])) {
+            $this->listeners[$event] = [];
+        }
+
+        $class = $listener[0];
+        if (isset($this->container) && $this->container->has($class)) {
+            $this->listeners[$event][] = $listener;
+        }
+    }
+
+    public function once($event, $listener): void
+    {
+        if (!is_array($listener)) {
+            $this->discord->on($event, $listener);
+            return;
+        }
+
+        if (!isset($this->onceListeners[$event])) {
+            $this->onceListeners[$event] = [];
+        }
+
+        $class = $listener[0];
+        if (isset($this->container) && $this->container->has($class)) {
+            $this->onceListeners[$event][] = $listener;
+        }
+    }
+
     public function emit($event, array $arguments = [])
     {
         if (!isset($this->container)) {
