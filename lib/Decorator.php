@@ -3,6 +3,7 @@
 
 namespace Freezemage\Discord;
 
+use Closure;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\RegisteredCommand;
@@ -297,6 +298,7 @@ class Decorator extends Discord
             }
         }
 
+        $listener = Closure::fromCallable($listener);
         $listener(...$arguments);
     }
 }
