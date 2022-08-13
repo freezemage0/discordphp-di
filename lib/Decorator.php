@@ -12,7 +12,9 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Activity;
 use Discord\Voice\VoiceClient;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Psr\Log\LoggerInterface;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
@@ -23,7 +25,6 @@ use React\Promise\ExtendedPromiseInterface;
 class Decorator extends Discord
 {
     protected Discord $discord;
-    
     protected ContainerInterface $container;
 
     /** @noinspection PhpMissingParentConstructorInspection */
@@ -269,65 +270,83 @@ class Decorator extends Discord
         $this->container = $container;
     }
 
+    /**
+     * Registers `$listener` callable for an `$event`.
+     * Delegates the registration to the original {@link \Discord\Discord} instance if it's unknown to {@link \Psr\Container\ContainerInterface}.
+     *
+     * @param string $event
+     * @param callable|array $listener
+     * @return void
+     */
     public function on($event, $listener): void
     {
-        if (!is_array($listener)) {
+        if (!is_array($listener) || !$this->container->has($listener[0])) {
             $this->discord->on($event, $listener);
             return;
         }
 
-        if (!isset($this->listeners[$event])) {
-            $this->listeners[$event] = [];
+        if (!isset($this->discord->listeners[$event])) {
+            $this->discord->listeners[$event] = [];
         }
-
-        $class = $listener[0];
-        if (isset($this->container) && $this->container->has($class)) {
-            $this->listeners[$event][] = $listener;
-        }
+        $this->discord->listeners[$event][] = $event;
     }
 
+    /**
+     * Registers `$listener` callable for an `$event`. This `$listener` will be called only once.
+     * Delegates the registration to the original {@link \Discord\Discord} instance of it's unknown to {@link \Psr\Container\ContainerInterface}.
+     *
+     * @param string $event
+     * @param callable|array $listener
+     * @return void
+     */
     public function once($event, $listener): void
     {
-        if (!is_array($listener)) {
-            $this->discord->on($event, $listener);
+        if (!is_array($listener) || !$this->container->has($listener[0])) {
+            $this->discord->once($event, $listener);
             return;
         }
 
-        if (!isset($this->onceListeners[$event])) {
-            $this->onceListeners[$event] = [];
+        if (!isset($this->discord->onceListeners[$event])) {
+            $this->discord->onceListeners[$event] = [];
         }
-
-        $class = $listener[0];
-        if (isset($this->container) && $this->container->has($class)) {
-            $this->onceListeners[$event][] = $listener;
-        }
+        $this->discord->onceListeners[$event][] = $listener;
     }
 
+    /**
+     * @param string $event
+     * @param array $arguments
+     * @return void
+     */
     public function emit($event, array $arguments = [])
     {
-        if (!isset($this->container)) {
-            $this->discord->emit($event, $arguments);
-            return;
-        }
-
-        if (isset($this->listeners[$event])) {
-            foreach ($this->listeners[$event] as $listener) {
+        if (isset($this->discord->listeners[$event])) {
+            foreach ($this->discord->listeners[$event] as $listener) {
                 $this->invoke($listener, $arguments);
             }
         }
 
-        if (isset($this->onceListeners[$event])) {
-            foreach ($this->onceListeners[$event] as $listener) {
+        if (isset($this->discord->onceListeners[$event])) {
+            foreach ($this->discord->onceListeners[$event] as $listener) {
                 $this->invoke($listener, $arguments);
             }
-            unset($this->onceListeners[$event]);
+            unset($this->discord->onceListeners[$event]);
         }
     }
 
-    protected function invoke(callable $listener, array $arguments): void {
+    /**
+     * Calls the provided `$listener`.
+     * Creates an instance of `$listener[0]` class via {@link \Psr\Container\ContainerInterface}.
+     *
+     * @param callable|array $listener
+     * @param array $arguments
+     * @return void
+     *
+     * @throws ContainerExceptionInterface
+     */
+    protected function invoke($listener, array $arguments): void {
         if (is_array($listener)) {
             list($class, $method) = $listener;
-            if ($this->container->has($class)) {
+            if (is_string($class) && $this->container->has($class)) {
                 $listener = [$this->container->get($class), $method];
             }
         }
