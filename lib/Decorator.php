@@ -35,87 +35,87 @@ class Decorator extends Discord
 
     protected function handleVoiceServerUpdate(object $data): void
     {
-        $this->discord->handleVoiceServerUpdate($data); 
+        $this->discord->handleVoiceServerUpdate($data);
     }
 
     protected function handleResume(object $data): void
     {
-        $this->discord->handleResume($data); 
+        $this->discord->handleResume($data);
     }
 
     protected function handleReady(object $data)
     {
-        return $this->discord->handleReady($data); 
+        return $this->discord->handleReady($data);
     }
 
     protected function handleGuildMembersChunk(object $data): void
     {
-        $this->discord->handleGuildMembersChunk($data); 
+        $this->discord->handleGuildMembersChunk($data);
     }
 
     protected function handleVoiceStateUpdate(object $data): void
     {
-        $this->discord->handleVoiceStateUpdate($data); 
+        $this->discord->handleVoiceStateUpdate($data);
     }
 
     public function handleWsConnection(WebSocket $ws): void
     {
-        $this->discord->handleWsConnection($ws); 
+        $this->discord->handleWsConnection($ws);
     }
 
     public function handleWsMessage(Message $message): void
     {
-        $this->discord->handleWsMessage($message); 
+        $this->discord->handleWsMessage($message);
     }
 
     protected function processWsMessage(string $data): void
     {
-        $this->discord->processWsMessage($data); 
+        $this->discord->processWsMessage($data);
     }
 
     public function handleWsClose(int $op, string $reason): void
     {
-        $this->discord->handleWsClose($op, $reason); 
+        $this->discord->handleWsClose($op, $reason);
     }
 
     public function handleWsError(\Exception $e): void
     {
-        $this->discord->handleWsError($e); 
+        $this->discord->handleWsError($e);
     }
 
     public function handleWsConnectionFailed(\Throwable $e)
     {
-        $this->discord->handleWsConnectionFailed($e); 
+        $this->discord->handleWsConnectionFailed($e);
     }
 
     protected function handleDispatch(object $data): void
     {
-        $this->discord->handleDispatch($data); 
+        $this->discord->handleDispatch($data);
     }
 
     protected function handleHeartbeat(object $data): void
     {
-        $this->discord->handleHeartbeat($data); 
+        $this->discord->handleHeartbeat($data);
     }
 
     protected function handleHeartbeatAck(object $data): void
     {
-        $this->discord->handleHeartbeatAck($data); 
+        $this->discord->handleHeartbeatAck($data);
     }
 
     protected function handleReconnect(object $data): void
     {
-        $this->discord->handleReconnect($data); 
+        $this->discord->handleReconnect($data);
     }
 
     protected function handleInvalidSession(object $data): void
     {
-        $this->discord->handleInvalidSession($data); 
+        $this->discord->handleInvalidSession($data);
     }
 
     protected function handleHello(object $data): void
     {
-        $this->discord->handleHello($data); 
+        $this->discord->handleHello($data);
     }
 
     protected function identify(bool $resume = true): bool
@@ -125,32 +125,32 @@ class Decorator extends Discord
 
     public function heartbeat(): void
     {
-        $this->discord->heartbeat(); 
+        $this->discord->heartbeat();
     }
 
     protected function setupChunking()
     {
-        $this->discord->setupChunking(); 
+        $this->discord->setupChunking();
     }
 
     protected function setupHeartbeat(int $interval): void
     {
-        $this->discord->setupHeartbeat($interval); 
+        $this->discord->setupHeartbeat($interval);
     }
 
     protected function connectWs(): void
     {
-        $this->discord->connectWs(); 
+        $this->discord->connectWs();
     }
 
     protected function send(array $data, bool $force = false): void
     {
-        $this->discord->send($data, $force); 
+        $this->discord->send($data, $force);
     }
 
     protected function ready()
     {
-        return $this->discord->ready(); 
+        return $this->discord->ready();
     }
 
     public function updatePresence(
@@ -159,12 +159,12 @@ class Decorator extends Discord
         string $status = 'online',
         bool $afk = false
     ): void {
-        $this->discord->updatePresence($activity, $idle, $status, $afk); 
+        $this->discord->updatePresence($activity, $idle, $status, $afk);
     }
 
     public function getVoiceClient(string $guild_id): ?VoiceClient
     {
-        return $this->discord->getVoiceClient($guild_id); 
+        return $this->discord->getVoiceClient($guild_id);
     }
 
     public function joinVoiceChannel(
@@ -174,67 +174,67 @@ class Decorator extends Discord
         ?LoggerInterface $logger = null,
         bool $check = true
     ): ExtendedPromiseInterface {
-        return $this->discord->joinVoiceChannel($channel, $mute, $deaf, $logger, $check); 
+        return $this->discord->joinVoiceChannel($channel, $mute, $deaf, $logger, $check);
     }
 
     protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
     {
-        return $this->discord->setGateway($gateway); 
+        return $this->discord->setGateway($gateway);
     }
 
     protected function resolveOptions(array $options = []): array
     {
-        return $this->discord->resolveOptions($options); 
+        return $this->discord->resolveOptions($options);
     }
 
     public function addLargeGuild(Part $guild): void
     {
-        $this->discord->addLargeGuild($guild); 
+        $this->discord->addLargeGuild($guild);
     }
 
     public function run(): void
     {
-        $this->discord->run(); 
+        $this->discord->run();
     }
 
     public function close(bool $closeLoop = true): void
     {
-        $this->discord->close($closeLoop); 
+        $this->discord->close($closeLoop);
     }
 
     public function factory(string $class, $data = [], bool $created = false)
     {
-        return $this->discord->factory($class, $data, $created); 
+        return $this->discord->factory($class, $data, $created);
     }
 
     public function getFactory(): Factory
     {
-        return $this->discord->getFactory(); 
+        return $this->discord->getFactory();
     }
 
     public function getHttpClient(): Http
     {
-        return $this->discord->getHttpClient(); 
+        return $this->discord->getHttpClient();
     }
 
     public function getLoop(): LoopInterface
     {
-        return $this->discord->getLoop(); 
+        return $this->discord->getLoop();
     }
 
     public function getLogger(): LoggerInterface
     {
-        return $this->discord->getLogger(); 
+        return $this->discord->getLogger();
     }
 
     public function getHttp(): Http
     {
-        return $this->discord->getHttp(); 
+        return $this->discord->getHttp();
     }
 
     public function __get($name)
     {
-        return $this->discord->__get($name); 
+        return $this->discord->__get($name);
     }
 
     public function __set($name, $value)
@@ -244,7 +244,7 @@ class Decorator extends Discord
 
     public function getChannel($channel_id): ?Channel
     {
-        return $this->discord->getChannel($channel_id); 
+        return $this->discord->getChannel($channel_id);
     }
 
     public function listenCommand(
@@ -252,17 +252,17 @@ class Decorator extends Discord
         callable $callback = null,
         ?callable $autocomplete_callback = null
     ): RegisteredCommand {
-        return $this->discord->listenCommand($name, $callback, $autocomplete_callback); 
+        return $this->discord->listenCommand($name, $callback, $autocomplete_callback);
     }
 
     public function __call($name, $params)
     {
-        return $this->discord->__call($name, $params); 
+        return $this->discord->__call($name, $params);
     }
 
     public function __debugInfo(): array
     {
-        return $this->discord->__debugInfo(); 
+        return $this->discord->__debugInfo();
     }
 
     public function setContainer(ContainerInterface $container): void
@@ -276,82 +276,70 @@ class Decorator extends Discord
      *
      * @param string $event
      * @param callable|array $listener
-     * @return void
+     * @return static
      */
-    public function on($event, $listener): void
+    public function on($event, $listener): Discord
     {
-        if (!is_array($listener) || !$this->container->has($listener[0])) {
-            $this->discord->on($event, $listener);
-            return;
+        if (is_array($listener) && $this->container->has($listener[0])) {
+            list($class, $method) = $listener;
+            $container = $this->container;
+
+            $listener = function (...$arguments) use ($class, $method, $container): void {
+                $object = $container->get($class);
+                $object->{$method}(...$arguments);
+            };
+
+            $listener = Closure::fromCallable($listener)->bindTo($this->discord);
         }
 
-        if (!isset($this->discord->listeners[$event])) {
-            $this->discord->listeners[$event] = [];
-        }
-        $this->discord->listeners[$event][] = $event;
+        $this->discord->on($event, $listener);
+
+        return $this;
     }
 
     /**
      * Registers `$listener` callable for an `$event`. This `$listener` will be called only once.
-     * Delegates the registration to the original {@link \Discord\Discord} instance of it's unknown to {@link \Psr\Container\ContainerInterface}.
+     * Delegates the registration to the original {@link \Discord\Discord} instance if it's unknown to {@link \Psr\Container\ContainerInterface}.
      *
      * @param string $event
      * @param callable|array $listener
-     * @return void
+     * @return static
      */
-    public function once($event, $listener): void
+    public function once($event, $listener): Discord
     {
-        if (!is_array($listener) || !$this->container->has($listener[0])) {
-            $this->discord->once($event, $listener);
-            return;
+        if (is_array($listener) && $this->container->has($listener[0])) {
+            list($class, $method) = $listener;
+
+            $listener = function (...$arguments) use ($class, $method): void {
+                $object = $this->container->get($class);
+                $object->{$method}(...$arguments);
+            };
+
+            $listener = Closure::fromCallable($listener)->bindTo($this->discord);
         }
 
-        if (!isset($this->discord->onceListeners[$event])) {
-            $this->discord->onceListeners[$event] = [];
-        }
-        $this->discord->onceListeners[$event][] = $listener;
+        $this->discord->once($event, $listener);
+
+        return $this;
     }
 
-    /**
-     * @param string $event
-     * @param array $arguments
-     * @return void
-     */
     public function emit($event, array $arguments = [])
     {
-        if (isset($this->discord->listeners[$event])) {
-            foreach ($this->discord->listeners[$event] as $listener) {
-                $this->invoke($listener, $arguments);
-            }
-        }
-
-        if (isset($this->discord->onceListeners[$event])) {
-            foreach ($this->discord->onceListeners[$event] as $listener) {
-                $this->invoke($listener, $arguments);
-            }
-            unset($this->discord->onceListeners[$event]);
-        }
+        $this->discord->emit($event, $arguments);
     }
 
-    /**
-     * Calls the provided `$listener`.
-     * Creates an instance of `$listener[0]` class via {@link \Psr\Container\ContainerInterface}.
-     *
-     * @param callable|array $listener
-     * @param array $arguments
-     * @return void
-     *
-     * @throws ContainerExceptionInterface
-     */
-    protected function invoke($listener, array $arguments): void {
-        if (is_array($listener)) {
-            list($class, $method) = $listener;
-            if (is_string($class) && $this->container->has($class)) {
-                $listener = [$this->container->get($class), $method];
-            }
-        }
+    public function listeners($event = null): array
+    {
+        return $this->discord->listeners($event);
+    }
 
-        $listener = Closure::fromCallable($listener);
-        $listener(...$arguments);
+    public function removeListener($event, callable $listener)
+    {
+        $this->discord->removeListener($event, $listener);
+    }
+
+    public function removeAllListeners($event = null)
+    {
+        $this->discord->removeAllListeners($event);
     }
 }
